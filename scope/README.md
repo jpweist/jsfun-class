@@ -28,7 +28,10 @@ changeText();
 
 // Log B: text
 
-const result = 'REPLACE WITH YOUR RESULT HERE';
+const result = function changeText() {
+  text = 'Goodbye World!';
+  console.log(text);
+};
 return result;
 
 
@@ -65,7 +68,7 @@ return result;
 // Next we invoke our `changeText` function which brings us back up to line 3. Within this function we re-assign the value of `text` to 'Goodbye World!'
 // Because there is no variable declaration for `text` inside our current functional scope, the reassignment will look up the scope chain, into the global scope, and reassign the value of the `text` variable we declared on line 1.
 // Now that `changeText` is finished executing, we hop back down to our last `console.log()` of 'B' which now logs 'Goodbye World!'
-``` 
+```
 
 In the event that the value of a variable would be undefined or the code would throw an error, write your answer like so:
 
