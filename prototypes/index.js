@@ -40,7 +40,7 @@ const kittyPrompts = {
     return oldCatsToYoung;
 
 
-    // Annotation:
+    // Annotation: // i used sort to check for the older vs younger cat b - a is lowest to highest. can go a - b for the other way
     // Write your annotation here as a comment
   },
 
@@ -58,8 +58,10 @@ const kittyPrompts = {
     // },
     // ...etc]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    let oldCats = kitties.map((cat) => cat.age + 2);
+    console.log(oldCats)
+    let sortCats = oldCats.sort((a, b) => b.age - a.age);
+    return sortCats;
   }
 };
 
