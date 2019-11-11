@@ -57,11 +57,11 @@ const kittyPrompts = {
     //   color: 'orange'
     // },
     // ...etc]
+    let result = kitties.map((cat) => {
+      cat.age + 2;
+    });
 
-    let oldCats = kitties.map((cat) => cat.age + 2);
-    console.log(oldCats)
-    let sortCats = oldCats.sort((a, b) => b.age - a.age);
-    return sortCats;
+    return result;
   }
 };
 
@@ -92,8 +92,10 @@ const clubPrompts = {
     //   ...etc
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    clubs.reduce((acc, val) => {
+
+      return acc;
+    }, [])
 
     // Annotation:
     // Write your annotation here as a comment
