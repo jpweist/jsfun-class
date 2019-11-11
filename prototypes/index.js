@@ -57,8 +57,8 @@ const kittyPrompts = {
     //   color: 'orange'
     // },
     // ...etc]
-    let result = kitties.map((cat) => {
-      cat.age + 2;
+    let result = kitties.forEach((cat) => {
+      return cat.age + 2;
     });
 
     return result;
