@@ -57,9 +57,9 @@ const kittyPrompts = {
     //   color: 'orange'
     // },
     // ...etc]
-    let result = kitties.forEach((cat) => {
-      return cat.age + 2;
-    });
+    let result = kitties.filter((acc, val) => {
+      return acc += acc.age = acc.age + 2;
+      }, []);
 
     return result;
   }
@@ -93,7 +93,6 @@ const clubPrompts = {
     // }
 
     clubs.reduce((acc, val) => {
-
       return acc;
     }, [])
 
@@ -130,8 +129,12 @@ const modPrompts = {
     //   { mod: 4, studentsPerInstructor: 8 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    clubs.forEach((club) => {
+      club.reduce((acc, val) => {
+        console.log(acc, val)
+        return acc;
+      }, [])
+    })
 
     // Annotation:
     // Write your annotation here as a comment
