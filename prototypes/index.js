@@ -92,9 +92,9 @@ const clubPrompts = {
     //   ...etc
     // }
 
-    clubs.reduce((acc, val) => {
-      return acc;
-    }, [])
+    // clubs.reduce((acc, val) => {
+    //   return acc;
+    // }, [])
 
     // Annotation:
     // Write your annotation here as a comment
@@ -129,12 +129,10 @@ const modPrompts = {
     //   { mod: 4, studentsPerInstructor: 8 }
     // ]
 
-    clubs.forEach((club) => {
-      club.reduce((acc, val) => {
-        console.log(acc, val)
-        return acc;
-      }, [])
-    })
+    mods.reduce((acc, val) => {
+
+      return acc;
+    }, [])
 
     // Annotation:
     // Write your annotation here as a comment
