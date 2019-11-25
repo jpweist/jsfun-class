@@ -21,9 +21,9 @@ const { dinosaurs, humans, movies } = require('./datasets/dinosaurs');
 // DATASET: kitties from ./datasets/kitties
 const kittyPrompts = {
   orangeKittyNames() {
-     let orangeCats = kitties.filter((cat) => cat.color === 'orange');
-     let justNames = orangeCats.map((cat) => cat.name);
-     return justNames;
+    let orangeCats = kitties.filter((cat) => cat.color === 'orange');
+    let justNames = orangeCats.map((cat) => cat.name);
+    return justNames;
 
     // Return an array of just the names of kitties who are orange e.g.
     // ['Tiger', 'Snickers']
@@ -59,7 +59,7 @@ const kittyPrompts = {
     // ...etc]
     let result = kitties.filter((acc, val) => {
       return acc += acc.age = acc.age + 2;
-      }, []);
+    }, []);
 
     return result;
   }
@@ -81,6 +81,7 @@ const kittyPrompts = {
 
 
 
+
 // DATASET: clubs from ./datasets/clubs
 const clubPrompts = {
   membersBelongingToClubs() {
@@ -92,12 +93,20 @@ const clubPrompts = {
     //   ...etc
     // }
 
-    // clubs.reduce((acc, val) => {
-    //   return acc;
-    // }, [])
+    return clubs.reduce((acc, val) => {
+      val.members.forEach((member) => {
+        if (!acc[member]) {
+          acc[member] = [];
+        }
+        acc[member].push(val.club);
+      });
+      return acc;
+    }, {});
 
     // Annotation:
     // Write your annotation here as a comment
+
+
   }
 };
 
@@ -129,10 +138,10 @@ const modPrompts = {
     //   { mod: 4, studentsPerInstructor: 8 }
     // ]
 
-    mods.reduce((acc, val) => {
-
-      return acc;
-    }, [])
+    return mods.map((val) => {
+      let studentsPerInstructor = val.students / val.instructors;
+      return ( {mod: val.mod, studentsPerInstructor} );
+    });
 
     // Annotation:
     // Write your annotation here as a comment
@@ -166,8 +175,21 @@ const cakePrompts = {
     //    ..etc
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    return cakes.map((cake) => ( { flavor: cake.cakeFlavor, inStock: cake.inStock } ));
+
+
+
+
+
+
+
+
+
+
+
+    // return cakes.map((cake) => ( { flavor: cake.cakeFlavor, inStock: cake.inStock } ) )
+
+
 
     // Annotation:
     // Write your annotation here as a comment
@@ -194,8 +216,7 @@ const cakePrompts = {
     // ..etc
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    return cakes.filter((cake) => cake.inStock > 0 );
 
     // Annotation:
     // Write your annotation here as a comment
@@ -205,8 +226,9 @@ const cakePrompts = {
     // Return the total amount of cakes in stock e.g.
     // 59
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    return cakes.reduce((acc, cake) => {
+      return acc += cake.inStock;
+    }, 0);
 
     // Annotation:
     // Write your annotation here as a comment
@@ -217,8 +239,26 @@ const cakePrompts = {
     // every cake in the dataset e.g.
     // ['dutch process cocoa', 'toasted sugar', 'smoked sea salt', 'berries', ..etc]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    // return cakes.reduce((acc, cake) => {
+    //   cake.toppings.forEach((topping) => {
+    //     if (!acc.includes(topping)) {
+    //       acc.push(topping);
+    //     }
+    //   });
+    //   return acc;
+    // },[]);
+
+    return cakes.reduce((acc, cake) => {
+      cake.toppings.forEach((topping) => {
+        if (!acc.include(topping)) {
+          acc.push(topping);
+        }
+      });
+      return acc;
+    }, []);
+
+
+
 
     // Annotation:
     // Write your annotation here as a comment
