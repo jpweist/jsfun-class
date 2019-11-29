@@ -103,8 +103,9 @@ const clubPrompts = {
       return acc;
     }, {});
 
-    // Annotation:
+    // Annotation: have to use reduce because we have and object and need an object
     // Write your annotation here as a comment
+    // we need the members for each club. so we have to see if that key for the member exists and then push the clubs into that member key. we return the acc and the clubs.reduce()
 
 
   }
@@ -191,7 +192,10 @@ const cakePrompts = {
 
 
 
-    // Annotation:
+    // Annotation: we want an array of the same lenght so we can use map.
+    // for each cake flavor we add that to our flavor:
+    // for each instock we set that equal to cake.inStock.
+    // map returns an array of the same length.
     // Write your annotation here as a comment
   },
 
@@ -218,7 +222,8 @@ const cakePrompts = {
 
     return cakes.filter((cake) => cake.inStock > 0 );
 
-    // Annotation:
+    // Annotation: we are filtering because we do not care about cakes that are not instock
+    // we return the cakes that grater than 0;
     // Write your annotation here as a comment
   },
 
@@ -230,7 +235,8 @@ const cakePrompts = {
       return acc += cake.inStock;
     }, 0);
 
-    // Annotation:
+    // Annotation: because we have array and we want a single value we use reduce
+    // for each cake we add the instock to the acc and return the acc
     // Write your annotation here as a comment
   },
 
@@ -250,7 +256,7 @@ const cakePrompts = {
 
     return cakes.reduce((acc, cake) => {
       cake.toppings.forEach((topping) => {
-        if (!acc.include(topping)) {
+        if (!acc.includes(topping)) {
           acc.push(topping);
         }
       });
@@ -275,9 +281,16 @@ const cakePrompts = {
     //    ...etc
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
-
+    return cakes.reduce((acc, cake) => {
+      return cake.toppings.forEach((topping) => {
+        let count = 0
+        if(!acc.includes[topping]) {
+          count++;
+          acc.push(topping, count);
+        }
+      })
+      return acc;
+    },{})
     // Annotation:
     // Write your annotation here as a comment
   }
@@ -310,10 +323,9 @@ const classPrompts = {
     //   { roomLetter: 'G', program: 'FE', capacity: 29 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    return classrooms.filter((room) => room.program === 'FE');
 
-    // Annotation:
+    // Annotation: we filter out the 'BE' program and just return the 'FE' protgram part of the array.
     // Write your annotation here as a comment
   },
 
@@ -325,8 +337,18 @@ const classPrompts = {
     //   beCapacity: 96
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    let total =  classrooms.reduce((acc, val) => {
+
+        if (val.program === 'FE') {
+          acc.push( {feCapacity: val.capacity} );
+        }
+        if (val.program === 'BE') {
+          acc.push( {beCapacity: val.capacity} );
+        }
+      return acc;
+    },{ feCapacity: 0, beCapacity: 0 })
+    return total;
+
 
     // Annotation:
     // Write your annotation here as a comment
@@ -334,9 +356,8 @@ const classPrompts = {
 
   sortByCapacity() {
     // Return the array of classrooms sorted by their capacity (least capacity to greatest)
+    return classrooms.sort((a, b) => a.capacity - b.capacity);
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
 
     // Annotation:
     // Write your annotation here as a comment
