@@ -338,15 +338,16 @@ const classPrompts = {
     // }
 
     let total =  classrooms.reduce((acc, val) => {
-
+      console.log(acc, val.capacity)
         if (val.program === 'FE') {
-          acc.push( {feCapacity: val.capacity} );
+          acc.feCapacity += val.capacity;
+          console.log(val.capacity)
         }
         if (val.program === 'BE') {
-          acc.push( {beCapacity: val.capacity} );
+          acc.beCapacity += val.capacity;
         }
       return acc;
-    },{ feCapacity: 0, beCapacity: 0 })
+    },{})
     return total;
 
 
@@ -359,7 +360,7 @@ const classPrompts = {
     return classrooms.sort((a, b) => a.capacity - b.capacity);
 
 
-    // Annotation:
+    // Annotation: we want to sort the class rooms. use sort a - b gives the least to the greatest
     // Write your annotation here as a comment
   }
 };
@@ -386,10 +387,15 @@ const breweryPrompts = {
     // Return the total beer count of all beers for every brewery e.g.
     // 40
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    return breweries.reduce((acc, val) => {
+        let count = 0;
+        val.beers.forEach((beer) => {
+          count++;
+        })
+      return acc += count;
+    },0)
 
-    // Annotation:
+    // Annotation: use reduce because we have a array and we want a single value. for each beer we count++; then add that to the acc;
     // Write your annotation here as a comment
   },
 
