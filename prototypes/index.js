@@ -337,21 +337,24 @@ const classPrompts = {
     //   beCapacity: 96
     // }
 
-    let total =  classrooms.reduce((acc, val) => {
-      console.log(acc, val.capacity)
-        if (val.program === 'FE') {
-          acc.feCapacity += val.capacity;
-          console.log(val.capacity)
-        }
-        if (val.program === 'BE') {
-          acc.beCapacity += val.capacity;
-        }
+    let totalObject = classrooms.reduce((acc, room) => {
+      let feClass = classrooms.filter(classroom => classroom.program === 'FE').reduce((acc, num) => {
+        acc += num.capacity;
+        return acc;
+      }, 0);
+      let beClass = classrooms.filter(classroom => classroom.program === 'BE').reduce((acc, num) => {
+        acc += num.capacity;
+        return acc;
+      }, 0);
+        acc.feCapacity = feClass;
+        acc.beCapacity = beClass;
       return acc;
     },{})
-    return total;
+    return totalObject;
 
 
-    // Annotation:
+
+    // Annotation: we reduce the classrooms then filter the classrooms to be or fe. then reduce the filtered classrooms. then we add the reduced capacity to the acc.feCapacity or acc.beCapacity. then return total object
     // Write your annotation here as a comment
   },
 
@@ -408,8 +411,15 @@ const breweryPrompts = {
     // ...etc.
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    return breweries.reduce((acc, brewery) => {
+      // console.log(brewery)
+      let count = 0;
+      brewery.beers.forEach((beer) => {
+        return count++;
+      })
+
+      return acc += { name: brewery.name, beerCount: count};
+    },{})
 
     // Annotation:
     // Write your annotation here as a comment
