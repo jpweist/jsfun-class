@@ -283,14 +283,14 @@ const cakePrompts = {
 
     return cakes.reduce((acc, cake) => {
       return cake.toppings.forEach((topping) => {
-        let count = 0
+        let count = 0;
         if(!acc.includes[topping]) {
           count++;
           acc.push(topping, count);
         }
-      })
+      });
       return acc;
-    },{})
+    },{});
     // Annotation:
     // Write your annotation here as a comment
   }
@@ -429,9 +429,19 @@ const breweryPrompts = {
     // Return the beer which has the highest ABV of all beers
     // e.g.
     // { name: 'Barrel Aged Nature\'s Sweater', type: 'Barley Wine', abv: 10.9, ibu: 40 }
+    breweries.reduce((acc, val) => {
+      // console.log(val.beers)
+      // console.log(val.beers)
+      return val.beers.forEach((beer) => {
+        let sortBeer =  beer.sort((a, b) => b.abv - a.abv);
+        comsole.log(sortBeer)
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+      })
+
+
+      return acc;
+    }, {})
+
 
     // Annotation:
     // Write your annotation here as a comment
@@ -477,9 +487,8 @@ const turingPrompts = {
     //  { name: 'Pam', studentCount: 21 },
     //  { name: 'Robbie', studentCount: 18 }
     // ]
-
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    
+    // return acc += { name: brewery.name, beerCount: count};
 
     // Annotation:
     // Write your annotation here as a comment
