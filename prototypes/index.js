@@ -21,23 +21,26 @@ const { dinosaurs, humans, movies } = require('./datasets/dinosaurs');
 // DATASET: kitties from ./datasets/kitties
 const kittyPrompts = {
   orangeKittyNames() {
-    
+    let orangeCats = kitties.filter((cat) => cat.color === 'orange');
+    let justNames = orangeCats.map((cat) => cat.name);
+    return justNames;
+
     // Return an array of just the names of kitties who are orange e.g.
     // ['Tiger', 'Snickers']
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
 
-    // Annotation:
+
+    // Annotation: first i filtered the array for ornage cats then mapped the name to the justNames var and return that.
     // Write your annotation here as a comment
   },
 
   sortByAge() {
     // Sort the kitties by their age
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    let oldCatsToYoung = kitties.sort((a, b) => b.age - a.age);
+    return oldCatsToYoung;
 
-    // Annotation:
+
+    // Annotation: // i used sort to check for the older vs younger cat b - a is lowest to highest. can go a - b for the other way
     // Write your annotation here as a comment
   },
 
@@ -54,8 +57,10 @@ const kittyPrompts = {
     //   color: 'orange'
     // },
     // ...etc]
+    let result = kitties.filter((acc, val) => {
+      return acc += acc.age = acc.age + 2;
+    }, []);
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
     return result;
   }
 };
@@ -76,22 +81,33 @@ const kittyPrompts = {
 
 
 
+
 // DATASET: clubs from ./datasets/clubs
 const clubPrompts = {
   membersBelongingToClubs() {
     // Create an object whose keys are the names of people, and whose values are
-    // arrays that include the names of the clubs that person is a part of. e.g. 
+    // arrays that include the names of the clubs that person is a part of. e.g.
     // {
     //   Louisa: ['Drama', 'Art'],
     //   Pam: ['Drama', 'Art', 'Chess'],
     //   ...etc
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    return clubs.reduce((acc, val) => {
+      val.members.forEach((member) => {
+        if (!acc[member]) {
+          acc[member] = [];
+        }
+        acc[member].push(val.club);
+      });
+      return acc;
+    }, {});
 
-    // Annotation:
+    // Annotation: have to use reduce because we have and object and need an object
     // Write your annotation here as a comment
+    // we need the members for each club. so we have to see if that key for the member exists and then push the clubs into that member key. we return the acc and the clubs.reduce()
+
+
   }
 };
 
@@ -123,8 +139,10 @@ const modPrompts = {
     //   { mod: 4, studentsPerInstructor: 8 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    return mods.map((val) => {
+      let studentsPerInstructor = val.students / val.instructors;
+      return ( {mod: val.mod, studentsPerInstructor} );
+    });
 
     // Annotation:
     // Write your annotation here as a comment
@@ -152,16 +170,32 @@ const cakePrompts = {
   stockPerCake() {
     // Return an array of objects that include just the flavor of the cake and how
     // much of that cake is in stock e.g.
-    // [ 
+    // [
     //    { flavor: 'dark chocolate', inStock: 15 },
     //    { flavor: 'yellow', inStock: 14 },
     //    ..etc
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    return cakes.map((cake) => ( { flavor: cake.cakeFlavor, inStock: cake.inStock } ));
 
-    // Annotation:
+
+
+
+
+
+
+
+
+
+
+    // return cakes.map((cake) => ( { flavor: cake.cakeFlavor, inStock: cake.inStock } ) )
+
+
+
+    // Annotation: we want an array of the same lenght so we can use map.
+    // for each cake flavor we add that to our flavor:
+    // for each instock we set that equal to cake.inStock.
+    // map returns an array of the same length.
     // Write your annotation here as a comment
   },
 
@@ -186,21 +220,23 @@ const cakePrompts = {
     // ..etc
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    return cakes.filter((cake) => cake.inStock > 0 );
 
-    // Annotation:
+    // Annotation: we are filtering because we do not care about cakes that are not instock
+    // we return the cakes that grater than 0;
     // Write your annotation here as a comment
   },
-  
+
   totalInventory() {
     // Return the total amount of cakes in stock e.g.
     // 59
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    return cakes.reduce((acc, cake) => {
+      return acc += cake.inStock;
+    }, 0);
 
-    // Annotation:
+    // Annotation: because we have array and we want a single value we use reduce
+    // for each cake we add the instock to the acc and return the acc
     // Write your annotation here as a comment
   },
 
@@ -209,8 +245,26 @@ const cakePrompts = {
     // every cake in the dataset e.g.
     // ['dutch process cocoa', 'toasted sugar', 'smoked sea salt', 'berries', ..etc]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    // return cakes.reduce((acc, cake) => {
+    //   cake.toppings.forEach((topping) => {
+    //     if (!acc.includes(topping)) {
+    //       acc.push(topping);
+    //     }
+    //   });
+    //   return acc;
+    // },[]);
+
+    return cakes.reduce((acc, cake) => {
+      cake.toppings.forEach((topping) => {
+        if (!acc.includes(topping)) {
+          acc.push(topping);
+        }
+      });
+      return acc;
+    }, []);
+
+
+
 
     // Annotation:
     // Write your annotation here as a comment
@@ -219,17 +273,24 @@ const cakePrompts = {
   groceryList() {
     // I need to make a grocery list. Please give me an object where the keys are
     // each topping, and the values are the amount of that topping I need to buy e.g.
-    // { 
+    // {
     //    'dutch process cocoa': 1,
     //    'toasted sugar': 3,
     //    'smoked sea salt': 3,
-    //    'berries': 2, 
+    //    'berries': 2,
     //    ...etc
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
-
+    return cakes.reduce((acc, cake) => {
+      return cake.toppings.forEach((topping) => {
+        let count = 0;
+        if(!acc.includes[topping]) {
+          count++;
+          acc.push(topping, count);
+        }
+      });
+      return acc;
+    },{});
     // Annotation:
     // Write your annotation here as a comment
   }
@@ -262,35 +323,47 @@ const classPrompts = {
     //   { roomLetter: 'G', program: 'FE', capacity: 29 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    return classrooms.filter((room) => room.program === 'FE');
 
-    // Annotation:
+    // Annotation: we filter out the 'BE' program and just return the 'FE' protgram part of the array.
     // Write your annotation here as a comment
   },
 
   totalCapacities() {
     // Create an object where the keys are 'feCapacity' and 'beCapacity',
     // and the values are the total capacity for all classrooms in each program e.g.
-    // { 
+    // {
     //   feCapacity: 110,
     //   beCapacity: 96
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    let totalObject = classrooms.reduce((acc, room) => {
+      let feClass = classrooms.filter(classroom => classroom.program === 'FE').reduce((acc, num) => {
+        acc += num.capacity;
+        return acc;
+      }, 0);
+      let beClass = classrooms.filter(classroom => classroom.program === 'BE').reduce((acc, num) => {
+        acc += num.capacity;
+        return acc;
+      }, 0);
+        acc.feCapacity = feClass;
+        acc.beCapacity = beClass;
+      return acc;
+    },{})
+    return totalObject;
 
-    // Annotation:
+
+
+    // Annotation: we reduce the classrooms then filter the classrooms to be or fe. then reduce the filtered classrooms. then we add the reduced capacity to the acc.feCapacity or acc.beCapacity. then return total object
     // Write your annotation here as a comment
   },
 
   sortByCapacity() {
     // Return the array of classrooms sorted by their capacity (least capacity to greatest)
+    return classrooms.sort((a, b) => a.capacity - b.capacity);
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
 
-    // Annotation:
+    // Annotation: we want to sort the class rooms. use sort a - b gives the least to the greatest
     // Write your annotation here as a comment
   }
 };
@@ -317,10 +390,15 @@ const breweryPrompts = {
     // Return the total beer count of all beers for every brewery e.g.
     // 40
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    return breweries.reduce((acc, val) => {
+        let count = 0;
+        val.beers.forEach((beer) => {
+          count++;
+        })
+      return acc += count;
+    },0)
 
-    // Annotation:
+    // Annotation: use reduce because we have a array and we want a single value. for each beer we count++; then add that to the acc;
     // Write your annotation here as a comment
   },
 
@@ -333,8 +411,15 @@ const breweryPrompts = {
     // ...etc.
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    return breweries.reduce((acc, brewery) => {
+      // console.log(brewery)
+      let count = 0;
+      brewery.beers.forEach((beer) => {
+        return count++;
+      })
+
+      return acc += { name: brewery.name, beerCount: count};
+    },{})
 
     // Annotation:
     // Write your annotation here as a comment
@@ -344,9 +429,19 @@ const breweryPrompts = {
     // Return the beer which has the highest ABV of all beers
     // e.g.
     // { name: 'Barrel Aged Nature\'s Sweater', type: 'Barley Wine', abv: 10.9, ibu: 40 }
+    breweries.reduce((acc, val) => {
+      // console.log(val.beers)
+      // console.log(val.beers)
+      return val.beers.forEach((beer) => {
+        let sortBeer =  beer.sort((a, b) => b.abv - a.abv);
+        comsole.log(sortBeer)
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+      })
+
+
+      return acc;
+    }, {})
+
 
     // Annotation:
     // Write your annotation here as a comment
@@ -387,14 +482,13 @@ const breweryPrompts = {
 const turingPrompts = {
   studentsForEachInstructor() {
     // Return an array of instructors where each instructor is an object
-    // with a name and the count of students in their module. e.g. 
+    // with a name and the count of students in their module. e.g.
     // [
     //  { name: 'Pam', studentCount: 21 },
     //  { name: 'Robbie', studentCount: 18 }
     // ]
-
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    
+    // return acc += { name: brewery.name, beerCount: count};
 
     // Annotation:
     // Write your annotation here as a comment
@@ -402,7 +496,7 @@ const turingPrompts = {
 
   studentsPerInstructor() {
     // Return an object of how many students per teacher there are in each cohort e.g.
-    // { 
+    // {
     // cohort1806: 9,
     // cohort1804: 10.5
     // }
@@ -439,7 +533,7 @@ const turingPrompts = {
   curriculumPerTeacher() {
     // Return an object where each key is a curriculum topic and each value is
     // an array of instructors who teach that topic e.g.:
-    // { 
+    // {
     //   html: [ 'Travis', 'Louisa' ],
     //   css: [ 'Travis', 'Louisa' ],
     //   javascript: [ 'Travis', 'Louisa', 'Christie', 'Will' ],
@@ -510,7 +604,7 @@ const astronomyPrompts = {
   starsInConstellations() {
     // Return an array of all the stars that appear in any of the constellations
     // listed in the constellations object e.g.
-    // [ 
+    // [
     //   { name: 'Rigel',
     //     visualMagnitude: 0.13,
     //     constellation: 'Orion',
@@ -550,16 +644,16 @@ const astronomyPrompts = {
 
   constellationsStarsExistIn() {
     // Return an array of the names of the constellations that the brightest stars are part of e.g.
-    
+
     //  [ "Canis Major",
     //    "Carina",
     //    "Boötes",
     //    "Auriga",
     //    "Orion",
-    //    "Lyra", 
-    //    "Canis Minor", 
-    //    "The Plow", 
-    //    "Orion", 
+    //    "Lyra",
+    //    "Canis Minor",
+    //    "The Plow",
+    //    "Orion",
     //    "The Little Dipper" ]
 
 
@@ -603,7 +697,7 @@ const ultimaPrompts = {
 
   charactersByTotal() {
 
-    // Return the sum damage and total range for each character as an object. 
+    // Return the sum damage and total range for each character as an object.
     // ex: [ { Avatar: { damage: 27, range: 24 }, { Iolo: {...}, ...}
 
     const result = 'REPLACE WITH YOUR RESULT HERE';
@@ -633,7 +727,7 @@ const ultimaPrompts = {
 // DATASET: dinosaurs, humans, movies from ./datasets/dinosaurs
 const dinosaurPrompts = {
   countAwesomeDinosaurs() {
-    // Return an object where each key is a movie title and each value is the 
+    // Return an object where each key is a movie title and each value is the
     // number of awesome dinosaurs in that movie. e.g.:
     // {
     //   'Jurassic Park': 5,
@@ -655,24 +749,24 @@ const dinosaurPrompts = {
         an object whose key is a movie's title and whose value is the average age
         of the cast on the release year of that movie.
       e.g.:
-      { 
-        'Steven Spielberg': 
-          { 
+      {
+        'Steven Spielberg':
+          {
             'Jurassic Park': 34,
-            'The Lost World: Jurassic Park': 37 
+            'The Lost World: Jurassic Park': 37
           },
-        'Joe Johnston': 
-          { 
-            'Jurassic Park III': 44 
+        'Joe Johnston':
+          {
+            'Jurassic Park III': 44
           },
-        'Colin Trevorrow': 
-          { 
+        'Colin Trevorrow':
+          {
             'Jurassic World': 56
            },
-        'J. A. Bayona': 
-          { 
-            'Jurassic World: Fallen Kingdom': 59 
-          } 
+        'J. A. Bayona':
+          {
+            'Jurassic World: Fallen Kingdom': 59
+          }
       }
     */
 
@@ -692,7 +786,7 @@ const dinosaurPrompts = {
         name: 'Justin Duncan',
         nationality: 'Alien',
         imdbStarMeterRating: 0
-      }, 
+      },
       {
         name: 'Karin Ohman',
         nationality: 'Chinese',
