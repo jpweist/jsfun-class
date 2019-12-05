@@ -390,14 +390,15 @@ const breweryPrompts = {
     // Return the total beer count of all beers for every brewery e.g.
     // 40
 
-    return breweries.reduce((acc, val) => {
-        let count = 0;
-        val.beers.forEach((beer) => {
-          count++;
-        })
-      return acc += count;
-    },0)
+    return breweries.reduce((acc, brewery) => {
+      let count = 0;
+      // console.log(acc);
+      count += brewery.beers.length;
+      return acc;
+    }, 0)
+    console.log(count)
 
+    return count;
     // Annotation: use reduce because we have a array and we want a single value. for each beer we count++; then add that to the acc;
     // Write your annotation here as a comment
   },
@@ -487,7 +488,7 @@ const turingPrompts = {
     //  { name: 'Pam', studentCount: 21 },
     //  { name: 'Robbie', studentCount: 18 }
     // ]
-    
+
     // return acc += { name: brewery.name, beerCount: count};
 
     // Annotation:
