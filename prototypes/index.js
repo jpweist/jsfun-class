@@ -391,14 +391,8 @@ const breweryPrompts = {
     // 40
 
     return breweries.reduce((acc, brewery) => {
-      let count = 0;
-      // console.log(acc);
-      count += brewery.beers.length;
-      return acc;
+      return acc += brewery.beers.length;
     }, 0)
-    console.log(count)
-
-    return count;
     // Annotation: use reduce because we have a array and we want a single value. for each beer we count++; then add that to the acc;
     // Write your annotation here as a comment
   },
@@ -413,14 +407,11 @@ const breweryPrompts = {
     // ]
 
     return breweries.reduce((acc, brewery) => {
-      // console.log(brewery)
-      let count = 0;
-      brewery.beers.forEach((beer) => {
-        return count++;
-      })
-
-      return acc += { name: brewery.name, beerCount: count};
-    },{})
+      // console.log(brewery.name, brewery.beers.length)
+      acc.push({ name: brewery.name, beerCount: brewery.beers.length});
+      // console.log(acc)
+      return acc;
+    },[])
 
     // Annotation:
     // Write your annotation here as a comment
@@ -430,12 +421,11 @@ const breweryPrompts = {
     // Return the beer which has the highest ABV of all beers
     // e.g.
     // { name: 'Barrel Aged Nature\'s Sweater', type: 'Barley Wine', abv: 10.9, ibu: 40 }
-    breweries.reduce((acc, val) => {
-      // console.log(val.beers)
-      // console.log(val.beers)
-      return val.beers.forEach((beer) => {
-        let sortBeer =  beer.sort((a, b) => b.abv - a.abv);
-        comsole.log(sortBeer)
+    breweries.reduce((acc, brewery) => {
+      // console.log(brewery.beers)
+      // console.log(brewery.beers)
+      return brewery.beers.forEach((beer) => {
+        return beer.sort((a, b) => b - a);
 
       })
 
@@ -488,7 +478,12 @@ const turingPrompts = {
     //  { name: 'Pam', studentCount: 21 },
     //  { name: 'Robbie', studentCount: 18 }
     // ]
+    instructors.reduce((acc, teacher) => {
+      if (teaeher.module === cohort.module)
+      acc[teacher.name].push({name: teacher.name, studentCount: cohort.studentCount})
 
+      return acc;
+    }, [])
     // return acc += { name: brewery.name, beerCount: count};
 
     // Annotation:
