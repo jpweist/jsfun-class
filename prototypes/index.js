@@ -421,17 +421,16 @@ const breweryPrompts = {
     // Return the beer which has the highest ABV of all beers
     // e.g.
     // { name: 'Barrel Aged Nature\'s Sweater', type: 'Barley Wine', abv: 10.9, ibu: 40 }
-    breweries.reduce((acc, brewery) => {
-      // console.log(brewery.beers)
-      // console.log(brewery.beers)
+    // console.log(breweries[0].beers[0].abv);
+    // console.log(breweries[0].beers[0]);
+    return breweries.forEach((brewery) => {
+      // console.log(brewery)
       return brewery.beers.forEach((beer) => {
-        return beer.sort((a, b) => b - a);
+        // console.log(beer.abv);
+        let highestABV =  beer.abv.sort((a, b) => a - b)
 
       })
-
-
-      return acc;
-    }, {})
+    })
 
 
     // Annotation:
@@ -478,10 +477,21 @@ const turingPrompts = {
     //  { name: 'Pam', studentCount: 21 },
     //  { name: 'Robbie', studentCount: 18 }
     // ]
-    instructors.reduce((acc, teacher) => {
-      if (teaeher.module === cohort.module)
-      acc[teacher.name].push({name: teacher.name, studentCount: cohort.studentCount})
+    // console.log('instructor', instructors[0]);
+    // console.log('cohort', cohorts[0]);
+    return instructors.reduce((acc, teacher) => {
+    // console.log(teacher.name)
+    return cohorts.forEach((cohort) => {
+      let teachers;
+      if (teacher.module === cohort.module) {
+        teachers = ({name: teacher.name, studentCount: cohort.studentCount});
+        // console.log({name: teacher.name, studentCount: cohort.studentCount})
+        // console.log(teachers)
+      }
+      console.log(acc)
+      return acc.push(teachers);
 
+    })
       return acc;
     }, [])
     // return acc += { name: brewery.name, beerCount: count};
