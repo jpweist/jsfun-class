@@ -477,23 +477,20 @@ const turingPrompts = {
     //  { name: 'Pam', studentCount: 21 },
     //  { name: 'Robbie', studentCount: 18 }
     // ]
-    // console.log('instructor', instructors[0]);
-    // console.log('cohort', cohorts[0]);
+    // console.log('instructor:', instructors[0]);
+    // console.log('cohort:', cohorts[0]);
     return instructors.reduce((acc, teacher) => {
-    // console.log(teacher.name)
-    return cohorts.forEach((cohort) => {
-      let teachers;
-      if (teacher.module === cohort.module) {
-        teachers = ({name: teacher.name, studentCount: cohort.studentCount});
-        // console.log({name: teacher.name, studentCount: cohort.studentCount})
-        // console.log(teachers)
-      }
-      console.log(acc)
-      return acc.push(teachers);
+      // console.log(teacher);
+      cohorts.forEach(cohort => {
+        if (teacher.module === cohort.module) {
+          acc.push({ name: teacher.name, studentCount: cohort.studentCount });
+        }
 
-    })
+      })
       return acc;
     }, [])
+
+
     // return acc += { name: brewery.name, beerCount: count};
 
     // Annotation:
