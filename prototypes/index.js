@@ -141,7 +141,7 @@ const modPrompts = {
 
     return mods.map((val) => {
       let studentsPerInstructor = val.students / val.instructors;
-      return ( {mod: val.mod, studentsPerInstructor} );
+      return ({ mod: val.mod, studentsPerInstructor });
     });
 
     // Annotation:
@@ -390,14 +390,9 @@ const breweryPrompts = {
     // Return the total beer count of all beers for every brewery e.g.
     // 40
 
-    return breweries.reduce((acc, val) => {
-        let count = 0;
-        val.beers.forEach((beer) => {
-          count++;
-        })
-      return acc += count;
-    },0)
-
+    return breweries.reduce((acc, brewery) => {
+      return acc += brewery.beers.length;
+    }, 0)
     // Annotation: use reduce because we have a array and we want a single value. for each beer we count++; then add that to the acc;
     // Write your annotation here as a comment
   },
@@ -412,14 +407,11 @@ const breweryPrompts = {
     // ]
 
     return breweries.reduce((acc, brewery) => {
-      // console.log(brewery)
-      let count = 0;
-      brewery.beers.forEach((beer) => {
-        return count++;
-      })
-
-      return acc += { name: brewery.name, beerCount: count};
-    },{})
+      // console.log(brewery.name, brewery.beers.length)
+      acc.push({ name: brewery.name, beerCount: brewery.beers.length});
+      // console.log(acc)
+      return acc;
+    },[])
 
     // Annotation:
     // Write your annotation here as a comment
@@ -429,18 +421,16 @@ const breweryPrompts = {
     // Return the beer which has the highest ABV of all beers
     // e.g.
     // { name: 'Barrel Aged Nature\'s Sweater', type: 'Barley Wine', abv: 10.9, ibu: 40 }
-    breweries.reduce((acc, val) => {
-      // console.log(val.beers)
-      // console.log(val.beers)
-      return val.beers.forEach((beer) => {
-        let sortBeer =  beer.sort((a, b) => b.abv - a.abv);
-        comsole.log(sortBeer)
+    // console.log(breweries[0].beers[0].abv);
+    // console.log(breweries[0].beers[0]);
+    return breweries.forEach((brewery) => {
+      // console.log(brewery)
+      return brewery.beers.forEach((beer) => {
+        // console.log(beer.abv);
+        let highestABV =  beer.abv.sort((a, b) => a - b)
 
       })
-
-
-      return acc;
-    }, {})
+    })
 
 
     // Annotation:
@@ -487,7 +477,20 @@ const turingPrompts = {
     //  { name: 'Pam', studentCount: 21 },
     //  { name: 'Robbie', studentCount: 18 }
     // ]
-    
+    // console.log('instructor:', instructors[0]);
+    // console.log('cohort:', cohorts[0]);
+    return instructors.reduce((acc, teacher) => {
+      // console.log(teacher);
+      cohorts.forEach(cohort => {
+        if (teacher.module === cohort.module) {
+          acc.push({ name: teacher.name, studentCount: cohort.studentCount });
+        }
+
+      })
+      return acc;
+    }, [])
+
+
     // return acc += { name: brewery.name, beerCount: count};
 
     // Annotation:
@@ -501,8 +504,6 @@ const turingPrompts = {
     // cohort1804: 10.5
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
 
     // Annotation:
     // Write your annotation here as a comment
@@ -523,8 +524,11 @@ const turingPrompts = {
     //     Will: [1, 2, 3, 4]
     //   }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    return instructors.reduce((acc, teacher) => {
+      console.log(teacher[name]);
+
+      return acc;
+    },{})
 
     // Annotation:
     // Write your annotation here as a comment
