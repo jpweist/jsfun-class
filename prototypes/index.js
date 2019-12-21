@@ -141,7 +141,7 @@ const modPrompts = {
 
     return mods.map((val) => {
       let studentsPerInstructor = val.students / val.instructors;
-      return ( {mod: val.mod, studentsPerInstructor} );
+      return ({ mod: val.mod, studentsPerInstructor });
     });
 
     // Annotation:
@@ -504,8 +504,6 @@ const turingPrompts = {
     // cohort1804: 10.5
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
 
     // Annotation:
     // Write your annotation here as a comment
@@ -526,8 +524,11 @@ const turingPrompts = {
     //     Will: [1, 2, 3, 4]
     //   }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    return instructors.reduce((acc, teacher) => {
+      console.log(teacher[name]);
+
+      return acc;
+    },{})
 
     // Annotation:
     // Write your annotation here as a comment
